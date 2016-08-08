@@ -1,4 +1,5 @@
 import http from "http"
+import path from "path"
 import express from "express"
 import io from "socket.io"
 import { SERVICE_PORT } from '../../config.js'
@@ -6,6 +7,12 @@ import { SERVICE_PORT } from '../../config.js'
 const app = express();
 const server = http.Server(app);
 const ioServer = io(server);
+
+app.use('/static', express.static(path.join(__dirname, '../../public/scripts')));
+
+app.get('*', (req, res) => {
+  res.send('Hello World')
+})
 
 server.listen(SERVICE_PORT);
 
