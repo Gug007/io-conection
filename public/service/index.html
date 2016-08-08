@@ -1,14 +1,29 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="serviceApp">
 <head>
     <meta charset="utf-8">
     <title>Service</title>
-    <link rel="stylesheet" href="public/bootstrap.css" />
-    <script src="public/angular.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap.css" />
+    <script src="/static/angular.js"></script>
+    <script src="/static/socket.io.js"></script>
+    <script>
+
+    </script>
+    <script>
+        var serviceApp = angular.module('serviceApp', []);
+        serviceApp.controller('MainController', function MainController($scope) {
+            $scope.count = 0;
+            var socket = io('http://localhost:4003');
+            socket.on('message for service', function(data) {
+                $scope.count++
+                $scope.$apply();
+            });
+        });
+    </script>
 </head>
-<body>
-
-<p>{{'yet' + '!'}}</p>
-
+<body ng-controller="MainController">
+  <div style="font-size: 75px; text-align: center; padding: 45px">
+      count: {{count}}
+  </div>
 </body>
 </html>
