@@ -16,10 +16,19 @@ app.get('*', (req, res) => {
 
 server.listen(SERVICE_PORT);
 
+let delivery = true;
+
 ioServer.on('connection', (socket) => {
   socket.on('message', (data) => {
-    socket.broadcast.emit('message for service', { data: data.data });
+    if(delivery) {
+      socket.broadcast.emit('message for service', { data: data.data });
+    }
     console.log("<<", data.data);
+  });
+
+  socket.on('message delivery bc', function(data) {
+    console.log(delivery, data)
+    delivery = data.status;
   });
 
   // Disconnect listener

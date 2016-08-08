@@ -18,12 +18,24 @@
                 $scope.count++
                 $scope.$apply();
             });
+
+            $scope.handleStart = function() {
+                socket.emit('message delivery bc', { status: true });
+            }
+
+            $scope.handleStop = function() {
+                socket.emit('message delivery bc', { status: false });
+            }
         });
     </script>
 </head>
 <body ng-controller="MainController">
   <div style="font-size: 75px; text-align: center; padding: 45px">
       count: {{count}}
+  </div>
+  <div style="text-align: center">
+      <button class="btn btn-default btn-lg" ng-click="handleStart()">Start</button>
+      <button class="btn btn-default btn-lg" ng-click="handleStop()">Stop</button>
   </div>
 </body>
 </html>
